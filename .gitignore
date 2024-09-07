@@ -1,0 +1,78 @@
+# Bỏ qua các thư mục bin và obj
+[Bb]in/
+[Oo]bj/
+
+# .NET Core specific
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Visual Studio files
+.vs/
+.vscode/
+*.csproj.user
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# User-specific files
+*.rsuser
+*.sln.ide
+*.sln.docstates
+
+# Auto-generated files
+*.ide
+*_i.c
+*_p.c
+*_i.h
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pyc
+*.pyo
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+
+# OSX
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# JetBrains Rider
+.idea/
+
+# Rider and Resharper settings directories
+.idea/
+*.sln.iml
