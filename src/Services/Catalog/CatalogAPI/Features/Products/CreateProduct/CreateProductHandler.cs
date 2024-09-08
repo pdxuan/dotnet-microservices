@@ -1,25 +1,36 @@
 ﻿using BuildingBlocks.CQRS;
 using CatalogAPI.Models;
-using MediatR;
+
 
 namespace CatalogAPI.Features.Products.CreateProduct
 {
 
     //MediatR Library that HandlerClass : IRequestHandler<TRequest, TResponse>
-    public record CreateProductCommand(Product product) : ICommand<CreateProductResult>;
+    public record CreateProductCommand(string Name, List<string> Category, string Description, string ImageFile, decimal Price) : ICommand<CreateProductResult>;
 
     public record CreateProductResult(Guid Id);
 
 
 
-    public class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
+    public class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, CreateProductResult>
     {
         public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
-            Product product = command.product;
+            Product product = new Product
+            {
+                Name = command.Name,
+                Category = command.Category,
+                Description = command.Description,
+                ImageFile = command.ImageFile,
+                Price = command.Price
+            };
 
+            // manually upadate the product and call saveChange. Not like other ORM like Entity or Dirty Session in Martin
+            session.Store(product);
 
-            return new CreateProductResult(Guid.NewGuid());
+            await session.SaveChangesAsync(cancellationToken);
+
+            return new CreateProductResult(product.Id);
         }
     }
 }
