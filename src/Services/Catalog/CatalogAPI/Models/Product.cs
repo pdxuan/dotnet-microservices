@@ -8,7 +8,7 @@
 
         public string? Description { get; set; }
 
-        public List<string> Category { get; set; } = new();
+        public List<string> Categories { get; set; } = new();
 
         public string? ImageFile { get; set; }
 
