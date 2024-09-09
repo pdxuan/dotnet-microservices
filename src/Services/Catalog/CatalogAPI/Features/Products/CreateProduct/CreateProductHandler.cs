@@ -1,5 +1,6 @@
 ﻿using BuildingBlocks.CQRS;
 using CatalogAPI.Models;
+using Microsoft.Extensions.Logging;
 
 
 namespace CatalogAPI.Features.Products.CreateProduct
@@ -11,11 +12,35 @@ namespace CatalogAPI.Features.Products.CreateProduct
     public record CreateProductResult(Guid Id);
 
 
+    public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
+    {
+        public CreateProductCommandValidator()
+        {
+            RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required");
+            RuleFor(x => x.Categories).NotEmpty().WithMessage("Category is required");
+            RuleFor(x => x.ImageFile).NotEmpty().WithMessage("ImageFile is required");
+            RuleFor(x => x.Price).GreaterThan(0).WithMessage("Price must be greater than 0");
+        }
+    }
 
-    public class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, CreateProductResult>
+
+    public class CreateProductCommandHandler(IDocumentSession session, IValidator<CreateProductCommand> validator,
+        ILogger<CreateProductCommandHandler> logger
+        ) : ICommandHandler<CreateProductCommand, CreateProductResult>
     {
         public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
+
+            var result = await validator.ValidateAsync(command, cancellationToken);
+            var errors = result.Errors.Select(e => e.ErrorMessage).ToArray();
+            if(errors.Any())
+            {
+                throw new ValidationException(errors.FirstOrDefault());
+            }
+
+            logger.LogInformation("CreateProductHandler.cs work");
+
+
             Product product = new Product
             {
                 Name = command.Name,

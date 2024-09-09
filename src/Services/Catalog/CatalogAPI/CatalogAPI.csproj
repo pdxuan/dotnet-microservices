@@ -18,9 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="Features\Products\GetProductById\" />
-    <Folder Include="Features\Products\DeleteProduct\" />
-    <Folder Include="Features\Products\UpdateProduct\" />
   </ItemGroup>
 
   <ItemGroup>
