@@ -1,6 +1,8 @@
 
 
+using BasketAPI.Repository;
 using BuildingBlocks.Exeptions;
+using Microsoft.Extensions.Caching.Distributed;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,7 @@ builder.Services.AddMediatR(config =>
 
 });
 
+
 //Data Services
 builder.Services.AddMarten(opts =>
 {
@@ -23,6 +26,25 @@ builder.Services.AddMarten(opts =>
 }).UseLightweightSessions();
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
+
+
+//Instead of register like this 
+//builder.Services.AddScoped<IBasketRepository>(services => new CachedBasketRepository(new BasketRepository(services.GetRequiredService<IDocumentSession>()), 
+//    services.GetRequiredService<IDistributedCache>()));
+// use Scrutor lib for readable code and easyly maintainable
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+    //options.InstanceName = "Basket";
+});
+
+builder.Services.AddHealthChecks().AddNpgSql(builder.Configuration
+    .GetConnectionString("Database")!)
+    .AddRedis(builder.Configuration.GetConnectionString("Redis")!);
 
 
 // Add services to the container.
