@@ -1,0 +1,9 @@
+﻿global using BuildingBlocks.Logging;
+global using BuildingBlocks.Validation;
+global using Carter;
+global using HealthChecks.UI.Client;
+global using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+global using Marten;
+global using BasketAPI.Models;
+global using MediatR;
+global using Mapster;
