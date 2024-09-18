@@ -1,15 +1,13 @@
-﻿using Discount.Grpc.DataLayer;
-using Discount.Grpc.Models;
+﻿using DiscountGrpc.DataLayer;
+using DiscountGrpc.Models;
 using Grpc.Core;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 
-namespace Discount.Grpc.Services
+namespace DiscountGrpc.Services
 {
     public class DiscountService(DiscountContext dbContext, ILogger<DiscountService> logger) : DiscountProtoService.DiscountProtoServiceBase
     {
-        public DiscountContext DbContext { get; } = dbContext;
-
         public async override Task<CouponModel> GetDiscount(GetDiscountRequest request, ServerCallContext context)
         {
             var coupon = await dbContext

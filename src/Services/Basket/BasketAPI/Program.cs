@@ -2,7 +2,8 @@
 
 using BasketAPI.Repository;
 using BuildingBlocks.Exeptions;
-using Microsoft.Extensions.Caching.Distributed;
+using DiscountGrpc;
+using DiscountGrpc.SDK;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,7 @@ builder.Services.AddMarten(opts =>
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 
+builder.Services.AddGrpcSdk(builder.Configuration["GrpcSettings:DiscountUrl"]!);
 
 //Instead of register like this 
 //builder.Services.AddScoped<IBasketRepository>(services => new CachedBasketRepository(new BasketRepository(services.GetRequiredService<IDocumentSession>()), 

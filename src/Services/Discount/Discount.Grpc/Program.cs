@@ -1,19 +1,24 @@
-using Discount.Grpc.DataLayer;
-using Discount.Grpc.Services;
+using DiscountGrpc.DataLayer;
+using DiscountGrpc.Services;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.AspNetCore.Server.Kestrel.Https;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddGrpc();
+builder.Services.AddGrpc(opts =>
+{
+    opts.EnableDetailedErrors = true;
+});
+
 builder.Services.AddDbContext<DiscountContext>(opts =>
 {
     opts.UseSqlite(builder.Configuration.GetConnectionString("Database"));
-});
+}); 
 
 
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 app.UseMigration();

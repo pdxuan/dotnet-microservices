@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Discount.Grpc.DataLayer
+namespace DiscountGrpc.DataLayer
 {
     public static class MigrationExtention
     {
