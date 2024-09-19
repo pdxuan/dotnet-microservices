@@ -16,6 +16,14 @@ namespace DiscountGrpc.SDK
             services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient> (client =>
             {
                 client.Address = new Uri(serverAddress);
+            })
+            .ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                var handler = new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+                return handler;
             });
 
             services.AddScoped<IDiscountGrpcService, DiscountGrpcService>();
