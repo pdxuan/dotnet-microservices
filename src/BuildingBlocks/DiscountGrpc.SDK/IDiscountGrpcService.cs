@@ -14,9 +14,6 @@ namespace DiscountGrpc.SDK
 
     public class DiscountGrpcService(DiscountProtoService.DiscountProtoServiceClient grpcClient) : IDiscountGrpcService
     {
-
-
-
         public async Task<CouponModel> GetDiscountAsync(GetDiscountRequest request, CancellationToken cancellationToken)
         {
             var coupon = await grpcClient.GetDiscountAsync(request,

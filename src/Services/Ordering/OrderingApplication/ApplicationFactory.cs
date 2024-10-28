@@ -15,7 +15,7 @@ namespace OrderingApplication
             services.AddMediatR(cfg =>
             {
                 cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-            });
+            }); 
 
             return services;
         }
