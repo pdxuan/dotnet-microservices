@@ -1,4 +1,5 @@
 ﻿
+
 namespace OrderingDomain.Models
 {
     public class Order : Aggregate<OrderId>
@@ -44,7 +45,7 @@ namespace OrderingDomain.Models
 
 
 
-            //order.AddDomainEvent(new OrderCreatedEvent(order));
+            order.AddDomainEvent(new OrderCreatedEvent(order));
 
             return order;
 
@@ -59,9 +60,21 @@ namespace OrderingDomain.Models
             Status = status;
 
 
-            //AddDomainEvent(new OrderUpdatedEvent(this));
+            AddDomainEvent(new OrderUpdatedEvent(this));
         }
 
+
+
+        public void Add(ProductId productId, int quantity, decimal price)
+        {
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(quantity);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
+
+
+            var orderItem = new OrderItem(Id, productId, quantity, price);
+            _orderItems.Add(orderItem);
+
+        }
 
 
     }
