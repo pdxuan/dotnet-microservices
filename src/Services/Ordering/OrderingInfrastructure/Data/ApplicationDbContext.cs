@@ -1,11 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OrderingDomain.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace OrderingInfrastructure.Data
 {
@@ -14,7 +11,6 @@ namespace OrderingInfrastructure.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { 
         
         }
-
 
         public DbSet<Customer> Customers  => Set<Customer>();
 
@@ -26,6 +22,9 @@ namespace OrderingInfrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
+            //builder.Entity<Customer>().Property(c => c.Name).IsRequired().HasMaxLength(100);
+            // Scan all class has implemented IEntityTypeConfiguration interface -> help us to seperate configuration to smaller class, instead of do all it here. 
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             base.OnModelCreating(builder);

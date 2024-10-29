@@ -14,7 +14,7 @@ namespace OrderingDomain.Models
 
         public Address ShippingAddress { get; private set; } = default!;
 
-        public Address BuillingAddress { get; private set; } = default!;
+        public Address BillingAddress { get; private set; } = default!;
 
         public Payment Payment { get; private set; } = default!;
 
@@ -38,7 +38,7 @@ namespace OrderingDomain.Models
                 CustomerId = customerId,
                 OrderName = orderName,
                 ShippingAddress = shippingAddress,
-                BuillingAddress = billingAddress,
+                BillingAddress = billingAddress,
                 Payment = payment,
                 Status = OrderStatus.Pending
             };
@@ -55,7 +55,7 @@ namespace OrderingDomain.Models
         {
             OrderName = orderName;
             ShippingAddress = shippingAddress;
-            BuillingAddress = billingAddress;
+            BillingAddress = billingAddress;
             Payment = payment;
             Status = status;
 

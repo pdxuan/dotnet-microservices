@@ -11,9 +11,9 @@ namespace OrderingDomain.ValueObjects
 
         private const int CCV_MAXLENGTH = 3;
 
-        public string CartName { get; set; } = default!;
+        public string CardName { get; set; } = default!;
 
-        public string CartNumber { get; set; } = default!;
+        public string CardNumber { get; set; } = default!;
 
         public string Expiration { get; set; } = default!;
 
@@ -27,23 +27,23 @@ namespace OrderingDomain.ValueObjects
         }
 
 
-        private Payment(string cartName, string cartNumber, string expiration, string cvv, int paymentMethod)
+        private Payment(string cardName, string cardNumber, string expiration, string cvv, int paymentMethod)
         {
-            CartName = cartName;
-            CartNumber = cartNumber;
+            CardName = cardName;
+            CardNumber = cardNumber;
             Expiration = expiration;
             CVV = cvv;
             PaymentMethod = paymentMethod;
         }
 
-        public static Payment Of(string cartName, string cartNumber, string expiration, string cvv, int paymentMethod)
+        public static Payment Of(string cardName, string cardNumber, string expiration, string cvv, int paymentMethod)
         {
-            ArgumentException.ThrowIfNullOrEmpty(cartName);
-            ArgumentException.ThrowIfNullOrEmpty(cartNumber);
+            ArgumentException.ThrowIfNullOrEmpty(cardName);
+            ArgumentException.ThrowIfNullOrEmpty(cardNumber);
             ArgumentException.ThrowIfNullOrEmpty(cvv);
             ArgumentOutOfRangeException.ThrowIfGreaterThan(cvv.Length, CCV_MAXLENGTH);
 
-            return new Payment(cartName, cartNumber, expiration, cvv, paymentMethod);
+            return new Payment(cardName, cardNumber, expiration, cvv, paymentMethod);
         }
 
     }

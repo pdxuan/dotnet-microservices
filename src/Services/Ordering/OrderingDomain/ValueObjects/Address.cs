@@ -5,9 +5,9 @@ namespace OrderingDomain.ValueObjects
     {
         public string FirstName { get; set; } = default!; 
 
-        public string Lastname { get; set; } = default!;
+        public string LastName { get; set; } = default!;
 
-        public string? EmailAdress { get; set; }
+        public string? EmailAddress { get; set; }
 
         public string AddressLine { get; set; } = default!;
 
@@ -28,8 +28,8 @@ namespace OrderingDomain.ValueObjects
         private Address(string firstName, string lastName, string emailAddress, string addressLine, string country, string city, string zipCode)
         {
             FirstName = firstName;
-            Lastname = lastName;
-            EmailAdress = emailAddress;
+            LastName = lastName;
+            EmailAddress = emailAddress;
             AddressLine = addressLine;
             Country = country;
             City = city;
