@@ -8,10 +8,10 @@ namespace OrderingDomain.Models
 
         public decimal Price { get; private set; } = default!;
 
-        public string? Description { get; private set; }
+        public string? Description { get;set; }
 
 
-        public static Product Create(ProductId id, string name, decimal price, string description)
+        public static Product Create(ProductId id, string name, decimal price, string description = "")
         {
 
             ArgumentException.ThrowIfNullOrWhiteSpace(name);

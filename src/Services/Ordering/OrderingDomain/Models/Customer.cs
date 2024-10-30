@@ -7,7 +7,6 @@ namespace OrderingDomain.Models
 
         public string Email { get; private set; } = default!;
 
-        public string PhoneNumber { get; private set; } = default!;
 
 
         /// <summary>

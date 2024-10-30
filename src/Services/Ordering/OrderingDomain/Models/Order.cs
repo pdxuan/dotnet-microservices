@@ -71,7 +71,7 @@ namespace OrderingDomain.Models
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
 
 
-            var orderItem = new OrderItem(Id, productId, quantity, price);
+            var orderItem = new OrderItem(this.Id, productId, quantity, price);
             _orderItems.Add(orderItem);
 
         }

@@ -3,7 +3,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OrderingDomain.Enums;
 using OrderingDomain.Models;
 using OrderingDomain.ValueObjects;
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace OrderingInfrastructure.Data.Configurations
 {
@@ -12,47 +16,55 @@ namespace OrderingInfrastructure.Data.Configurations
         public void Configure(EntityTypeBuilder<Order> builder)
         {
             builder.HasKey(o => o.Id);
+
             builder.Property(o => o.Id).HasConversion(
-                orderId => orderId.Value,
-                dbId => OrderId.Of(dbId));
+                            orderId => orderId.Value,
+                            dbId => OrderId.Of(dbId));
 
-            builder.HasOne<Customer>().WithMany().HasForeignKey(o => o.CustomerId).IsRequired();
+            builder.HasOne<Customer>()
+              .WithMany()
+              .HasForeignKey(o => o.CustomerId)
+              .IsRequired();
 
-            builder.HasMany(o => o.OrderItems).WithOne().HasForeignKey(oi => oi.OrderId);
+            builder.HasMany(o => o.OrderItems)
+                .WithOne()
+                .HasForeignKey(oi => oi.OrderId);
 
             builder.ComplexProperty(
                 o => o.OrderName, nameBuilder =>
                 {
-                    nameBuilder.Property(n => n.Value).HasColumnName(nameof(Order.OrderName)).HasMaxLength(100).IsRequired();
-                }
-                );
-
+                    nameBuilder.Property(n => n.Value)
+                        .HasColumnName(nameof(Order.OrderName))
+                        .HasMaxLength(100)
+                        .IsRequired();
+                });
 
             builder.ComplexProperty(
-          o => o.ShippingAddress, addressBuilder =>
-          {
-              addressBuilder.Property(a => a.FirstName)
-                  .HasMaxLength(50)
-                  .IsRequired();
+               o => o.ShippingAddress, addressBuilder =>
+               {
+                   addressBuilder.Property(a => a.FirstName)
+                       .HasMaxLength(50)
+                       .IsRequired();
 
-              addressBuilder.Property(a => a.LastName)
-                   .HasMaxLength(50)
-                   .IsRequired();
+                   addressBuilder.Property(a => a.LastName)
+                        .HasMaxLength(50)
+                        .IsRequired();
 
-              addressBuilder.Property(a => a.EmailAddress)
-                  .HasMaxLength(50);
+                   addressBuilder.Property(a => a.EmailAddress)
+                       .HasMaxLength(50);
 
-              addressBuilder.Property(a => a.AddressLine)
-                  .HasMaxLength(180)
-                  .IsRequired();
+                   addressBuilder.Property(a => a.AddressLine)
+                       .HasMaxLength(180)
+                       .IsRequired();
 
-              addressBuilder.Property(a => a.Country)
-                  .HasMaxLength(50);
+                   addressBuilder.Property(a => a.Country)
+                       .HasMaxLength(50);
 
-              addressBuilder.Property(a => a.ZipCode)
-                  .HasMaxLength(5)
-                  .IsRequired();
-          });
+
+                   addressBuilder.Property(a => a.ZipCode)
+                       .HasMaxLength(5)
+                       .IsRequired();
+               });
 
             builder.ComplexProperty(
               o => o.BillingAddress, addressBuilder =>
@@ -106,9 +118,6 @@ namespace OrderingInfrastructure.Data.Configurations
                     dbStatus => (OrderStatus)Enum.Parse(typeof(OrderStatus), dbStatus));
 
             builder.Property(o => o.TotalPrice);
-
-
-
         }
     }
 }
