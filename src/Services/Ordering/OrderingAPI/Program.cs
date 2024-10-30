@@ -19,11 +19,14 @@ var app = builder.Build();
 
 app.UseApiServices();
 
-if(app.Environment.IsDevelopment())
+
+app.UseHttpsRedirection();
+
+
+if (app.Environment.IsDevelopment())
 {
     await app.InitialiseDatabaseAsync();
 }
 
-app.UseHttpsRedirection();
 
 app.Run();
